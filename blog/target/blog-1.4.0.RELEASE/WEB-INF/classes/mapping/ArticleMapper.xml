@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zxj.mapper.ArticleMapper" >
+  <resultMap id="BaseResultMap" type="com.zxj.pojo.Article" >
+    <id column="article_id" property="articleId" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="overview" property="overview" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="markdown" property="markdown" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="sort_one" property="sortOne" jdbcType="VARCHAR" />
+    <result column="sort_two" property="sortTwo" jdbcType="VARCHAR" />
+    <result column="image_large" property="imageLarge" jdbcType="VARCHAR" />
+    <result column="image_small" property="imageSmall" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    article_id, title, overview, author, markdown, content, create_time, update_time, 
+    sort_one, sort_two, image_large, image_small
+  </sql>
+   <sql id="Except_CM_Column_List" >
+    article_id, title, overview, author, create_time, update_time,
+    sort_one, sort_two, image_large, image_small
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zxj.pojo.ArticleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from article
+    where article_id = #{articleId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from article
+    where article_id = #{articleId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zxj.pojo.ArticleExample" >
+    delete from article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zxj.pojo.Article" >
+    insert into article (article_id, title, overview, 
+      author, markdown, content, 
+      create_time, update_time, sort_one, 
+      sort_two, image_large, image_small
+      )
+    values (#{articleId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{overview,jdbcType=VARCHAR}, 
+      #{author,jdbcType=VARCHAR}, #{markdown,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{sortOne,jdbcType=VARCHAR}, 
+      #{sortTwo,jdbcType=VARCHAR}, #{imageLarge,jdbcType=VARCHAR}, #{imageSmall,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zxj.pojo.Article" >
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="articleId != null" >
+        article_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="overview != null" >
+        overview,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="markdown != null" >
+        markdown,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="sortOne != null" >
+        sort_one,
+      </if>
+      <if test="sortTwo != null" >
+        sort_two,
+      </if>
+      <if test="imageLarge != null" >
+        image_large,
+      </if>
+      <if test="imageSmall != null" >
+        image_small,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="articleId != null" >
+        #{articleId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="overview != null" >
+        #{overview,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="markdown != null" >
+        #{markdown,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sortOne != null" >
+        #{sortOne,jdbcType=VARCHAR},
+      </if>
+      <if test="sortTwo != null" >
+        #{sortTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="imageLarge != null" >
+        #{imageLarge,jdbcType=VARCHAR},
+      </if>
+      <if test="imageSmall != null" >
+        #{imageSmall,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zxj.pojo.ArticleExample" resultType="java.lang.Integer" >
+    select count(*) from article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update article
+    <set >
+      <if test="record.articleId != null" >
+        article_id = #{record.articleId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.overview != null" >
+        overview = #{record.overview,jdbcType=VARCHAR},
+      </if>
+      <if test="record.author != null" >
+        author = #{record.author,jdbcType=VARCHAR},
+      </if>
+      <if test="record.markdown != null" >
+        markdown = #{record.markdown,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sortOne != null" >
+        sort_one = #{record.sortOne,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sortTwo != null" >
+        sort_two = #{record.sortTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imageLarge != null" >
+        image_large = #{record.imageLarge,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imageSmall != null" >
+        image_small = #{record.imageSmall,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update article
+    set article_id = #{record.articleId,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      overview = #{record.overview,jdbcType=VARCHAR},
+      author = #{record.author,jdbcType=VARCHAR},
+      markdown = #{record.markdown,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      sort_one = #{record.sortOne,jdbcType=VARCHAR},
+      sort_two = #{record.sortTwo,jdbcType=VARCHAR},
+      image_large = #{record.imageLarge,jdbcType=VARCHAR},
+      image_small = #{record.imageSmall,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zxj.pojo.Article" >
+    update article
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="overview != null" >
+        overview = #{overview,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="markdown != null" >
+        markdown = #{markdown,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sortOne != null" >
+        sort_one = #{sortOne,jdbcType=VARCHAR},
+      </if>
+      <if test="sortTwo != null" >
+        sort_two = #{sortTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="imageLarge != null" >
+        image_large = #{imageLarge,jdbcType=VARCHAR},
+      </if>
+      <if test="imageSmall != null" >
+        image_small = #{imageSmall,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where article_id = #{articleId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zxj.pojo.Article" >
+    update article
+    set title = #{title,jdbcType=VARCHAR},
+      overview = #{overview,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      markdown = #{markdown,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      sort_one = #{sortOne,jdbcType=VARCHAR},
+      sort_two = #{sortTwo,jdbcType=VARCHAR},
+      image_large = #{imageLarge,jdbcType=VARCHAR},
+      image_small = #{imageSmall,jdbcType=VARCHAR}
+    where article_id = #{articleId,jdbcType=VARCHAR}
+  </update>
+   <!--自己的方法-->
+  <select id="findAllArticleExceptContent" resultMap="BaseResultMap" >
+    select <include refid="Except_CM_Column_List" />   from  article
+  </select>
+
+  <select id="findAllArticleExceptContentBySort2" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Except_CM_Column_List" />   from  article
+    where sort_two=#{sort_two,jdbcType=VARCHAR}
+  </select>
+
+  <select id="findAllArticleExceptContentBySort1" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select  <include refid="Except_CM_Column_List" />  from  article
+    where sort_one=#{sort_one,jdbcType=VARCHAR}
+  </select>
+  <select id="getRecentArticle" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select  <include refid="Except_CM_Column_List" />  from  article
+    order by create_time desc limit #{num};
+  </select>
+</mapper>
